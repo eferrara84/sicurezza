@@ -126,7 +126,7 @@ class Fetcher(Client):
                                  'properties': ['raw']})).then(post_fetch)
 
             else:
-                logger.warning("Unknown unsolicted response: %s", response)
+                logger.warning("Unknown unsolicted response: %s", resps)
 
     def received_new(self, msg):
         """

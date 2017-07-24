@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+from sqlalchemy.orm import sessionmaker
+from model.mail import Mail, create_database
 import switchboard
 import thread
 import email
@@ -50,7 +51,21 @@ class ListenerWorker(switchboard.Fetcher):
         logger.info("Subject: %s, From: %s, To: %s",
                     msg['subject'], msg['from'], msg['to'])
 
+        mmail = Mail(
+                sender = msg['from'],
+                subject = msg['subject'],
+                payload = msg.get_payload,
+                datetime = msg['date'],
+                to = msg['to'],
+                category = '0'
+                )
+
+        session.add(mmail)
+        session.commit()
         print msg.get_payload()
+
+
+
 
 
 
@@ -64,8 +79,19 @@ def main(url):
         listener.close()
 
 if __name__ == '__main__':
-    engine = create_engine()
+
+    engine = create_engine("sqlite:///data/emails.db", echo=True)
+    Session = sessionmaker(bind=engine)
+    session = Session()
+
+    create_database(engine)
+
+
     parser = argparse.ArgumentParser(description="Loop echo listener")
     parser.add_argument("--url", default="ws://192.168.50.2:8080/workers")
     args = parser.parse_args()
     main(args.url)
+
+    mails = session.query(Mail).all()
+
+

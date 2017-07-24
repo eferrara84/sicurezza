@@ -57,12 +57,19 @@ class ListenerWorker(switchboard.Fetcher):
                 subject = msg['subject'],
                 payload = msg.get_payload,
                 datetime = msg['date'],
-                tu = msg['to'],
+                to = msg['to'],
                 category = '0'
                 )
 
-        session.add(mmail)
-        session.commit()
+        try:
+            session.add(mmail)
+            session.commit()
+        except:
+            session.rollback()
+            raise
+        finally:
+            session.close()  # optional, depends on use case
+
         print msg.get_payload()
 
 
@@ -83,7 +90,7 @@ if __name__ == '__main__':
 
     engine = create_engine("sqlite:///data/emails.db", echo=True)
     Session = sessionmaker(bind=engine)
-    session = Session()
+    session = Session(expire_on_commit=False)
 
     create_database(engine)
 
@@ -93,6 +100,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     main(args.url)
 
-    mails = session.query(Mail).all()
+    mails = session.query(Mail)
+    print mails
 
 

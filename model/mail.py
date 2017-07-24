@@ -26,11 +26,13 @@ class Mail(Base):
     subject = Column(String)
     payload = Column(String)
     datetime = Column(String)
-    to = Column(String)
+    tu = Column(String)
     category = Column(String)
 
 
 if __name__ == '__main__':
-    engine = create_engine("sqlite:///.data/emails.db", echo=True)
+    engine = create_engine("sqlite:///../data/emails.db", echo=True)
     Session = sessionmaker(bind=engine)
-    session = Session()
+    sess = Session()
+
+    print sess.query(Mail).all()

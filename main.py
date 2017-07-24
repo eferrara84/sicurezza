@@ -52,11 +52,12 @@ class ListenerWorker(switchboard.Fetcher):
                     msg['subject'], msg['from'], msg['to'])
 
         mmail = Mail(
+                id = 0,
                 sender = msg['from'],
                 subject = msg['subject'],
                 payload = msg.get_payload,
                 datetime = msg['date'],
-                to = msg['to'],
+                tu = msg['to'],
                 category = '0'
                 )
 

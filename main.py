@@ -48,16 +48,20 @@ class ListenerWorker(switchboard.Fetcher):
         """
         Called when a new message is received.
         """
+        engine = create_engine("sqlite:///data/emails.db", echo=True)
+        Session = sessionmaker(bind=engine)
+        session = Session(expire_on_commit=True)
+        create_database(engine)
+
         logger.info("Subject: %s, From: %s, To: %s",
                     msg['subject'], msg['from'], msg['to'])
 
         mmail = Mail(
-                id = 0,
                 sender = msg['from'],
                 subject = msg['subject'],
-                payload = msg.get_payload,
+                payload = msg.get_payload(),
                 datetime = msg['date'],
-                to = msg['to'],
+                to = msg["to"],
                 category = '0'
                 )
 
@@ -88,11 +92,6 @@ def main(url):
 
 if __name__ == '__main__':
 
-    engine = create_engine("sqlite:///data/emails.db", echo=True)
-    Session = sessionmaker(bind=engine)
-    session = Session(expire_on_commit=False)
-
-    create_database(engine)
 
 
     parser = argparse.ArgumentParser(description="Loop echo listener")
@@ -100,7 +99,10 @@ if __name__ == '__main__':
     args = parser.parse_args()
     main(args.url)
 
+    engine = create_engine("sqlite:///data/emails.db", echo=True)
+    Session = sessionmaker(bind=engine)
+    session = Session()
     mails = session.query(Mail)
-    print mails
+    for m in mails: print m
 
 

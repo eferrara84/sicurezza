@@ -18,7 +18,7 @@ def create_database(eng):
 
 
 class Mail(Base):
-    __tablename__ = "Mails"
+    __tablename__ = "mail"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     message_id = Column(String)

@@ -11,4 +11,4 @@ if __name__ == '__main__':
 
     mails = session.query(Mail).all()
     for m in mails:
-        print m.payload
+        print m.sender, m.to, m.datetime, m.payload

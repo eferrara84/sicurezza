@@ -34,4 +34,4 @@ if __name__ == '__main__':
     engine = create_engine("sqlite:///../data/emails.db", echo=True)
     Session = sessionmaker(bind=engine)
     sess = Session(expire_on_commit=False)
-    print sess.query(Mail).all()
+    print sess.query(Mail)

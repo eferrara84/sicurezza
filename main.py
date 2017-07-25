@@ -65,20 +65,8 @@ class ListenerWorker(switchboard.Fetcher):
                 category = '0'
                 )
 
-        try:
-            session.add(mmail)
-            session.commit()
-        except:
-            session.rollback()
-            raise
-        finally:
-            session.close()  # optional, depends on use case
-
-        print msg.get_payload()
-
-
-
-
+        session.add(mmail)
+        session.commit()
 
 
 def main(url):

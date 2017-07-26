@@ -4,7 +4,7 @@ from collections import Counter
 from sklearn.naive_bayes import MultinomialNB, GaussianNB, BernoulliNB
 from sklearn.svm import SVC, NuSVC, LinearSVC
 from sklearn.metrics import confusion_matrix
-
+import pickle
 
 def make_Dictionary(train_dir):
     emails = [os.path.join(train_dir, f) for f in os.listdir(train_dir)]
@@ -70,6 +70,15 @@ model1 = MultinomialNB()
 model2 = LinearSVC()
 model1.fit(train_matrix,train_labels)
 model2.fit(train_matrix,train_labels)
+
+# Classifier Percistence
+# save the classifier
+with open('my_dumped_classifier.pkl', 'wb') as fid:
+    pickle.dump(model2, fid)
+
+# load it again into gnb_loaded
+with open('my_dumped_classifier.pkl', 'rb') as fid:
+    gnb_loaded = pickle.load(fid)
 
 # Test the unseen mails for Spam
 #test_dir = 'test-mails'

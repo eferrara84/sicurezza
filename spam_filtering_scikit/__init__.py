@@ -76,6 +76,10 @@ model2.fit(train_matrix,train_labels)
 with open('my_dumped_classifier.pkl', 'wb') as fid:
     pickle.dump(model2, fid)
 
+# save the dictionary
+with open('my_dumped_dictionary.pkl', 'wb') as fid:
+    pickle.dump(dictionary, fid)
+
 # load it again into gnb_loaded
 with open('my_dumped_classifier.pkl', 'rb') as fid:
     gnb_loaded = pickle.load(fid)

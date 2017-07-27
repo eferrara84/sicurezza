@@ -52,7 +52,7 @@ def extract_features(mail_dir):
                 if d[0] == word:
                   wordID = i
                   features_matrix[docID,wordID] = words.count(word)
-                  print "Reading: " + fil
+                  #print "Reading: " + fil
 
         docID = docID + 1
     print features_matrix

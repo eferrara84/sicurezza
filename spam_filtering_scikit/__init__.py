@@ -37,6 +37,17 @@ dictionary = dictionary.most_common(3000)
 
 #print dictionary
 
+def count_words(line):
+    words = line.split()
+    feature_vec = np.zeros(3000)
+    for word in words:
+        wordID = 0
+        for i, d in enumerate(dictionary):
+            if d[0] == word:
+                wordID = i
+                feature_vec[wordID] = words.count(word)
+    return feature_vec
+
 def extract_features(mail_dir):
     files = [os.path.join(mail_dir,fi) for fi in os.listdir(mail_dir)]
     features_matrix = np.zeros((len(files),3000))
@@ -45,25 +56,20 @@ def extract_features(mail_dir):
       with open(fil) as fi:
         for i,line in enumerate(fi):
           if i == 2:
-            words = line.split()
-            for word in words:
-              wordID = 0
-              for i,d in enumerate(dictionary):
-                if d[0] == word:
-                  wordID = i
-                  features_matrix[docID,wordID] = words.count(word)
-                  #print "Reading: " + fil
+            feature_vec = count_words(line)
+        features_matrix[docID] = feature_vec
+        #print "Reading: " + fil
 
         docID = docID + 1
-    print features_matrix
     return features_matrix
+
+
 
 
 # Prepare feature vectors per training mail and its labels
 train_labels = np.zeros(702)
 train_labels[351:701] = 1
 train_matrix = extract_features(train_dir)
-
 # Training SVM and Naive bayes classifier
 
 model1 = MultinomialNB()
@@ -93,3 +99,5 @@ result1 = model1.predict(test_matrix)
 result2 = model2.predict(test_matrix)
 print "confusion_matrix(test_labels,result1)", confusion_matrix(test_labels,result1)
 print "confusion_matrix(test_labels,result2)", confusion_matrix(test_labels,result2)
+
+

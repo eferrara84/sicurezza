@@ -105,8 +105,6 @@ if __name__ == '__main__':
     main(args.url)
 
 
-
-
     # engine = create_engine("sqlite:///data/emails.db", echo=True)
     # Session = sessionmaker(bind=engine)
     # session = Session()

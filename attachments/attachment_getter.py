@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import pprint
+from time import sleep
+
+import progressbar
 
 import switchboard
 import os
-
 
 import argparse
 import logging
@@ -14,7 +16,6 @@ from attachments.virustotal_analysis import vt_singleton
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-
 ACCOUNT = 'tesinasicurezza@gmail.com'
 CONN_SPEC = {'host': 'imap.gmail.com',
              'port': 993,
@@ -22,8 +23,6 @@ CONN_SPEC = {'host': 'imap.gmail.com',
                  'type': 'plain',
                  'username': ACCOUNT,
                  'password': 'computersecurity'}};
-
-
 
 
 class ListenerWorker(switchboard.Fetcher):
@@ -38,6 +37,7 @@ class ListenerWorker(switchboard.Fetcher):
         Connect to the websocket, and ensure the account is connected and
         the INBOX is being watched, and then start watchingAll.
         """
+
         def post_setup((cmds, resps)):
             """Post setup callback."""
             logger.info("Setup complete, listening...")
@@ -67,7 +67,7 @@ class ListenerWorker(switchboard.Fetcher):
                 filePath = os.path.join('./attachments_files/', fileName)
                 if not os.path.isfile(filePath):
                     print fileName
-                    fp = open(filePath, 'wb',0)
+                    fp = open(filePath, 'wb', 0)
                     fp.write(part.get_payload(decode=True))
                     fp.flush()
                     fp.close()
@@ -75,17 +75,30 @@ class ListenerWorker(switchboard.Fetcher):
 
         vt = vt_singleton()
 
-
-
         f_resource = vt.scan(file_path=filePath)
-        print f_resource
+        # print f_resource
+        # print 'ee551491bf660b85eca8925bc52457a3e1915ba127d2392222fccd93eb67a87a'
+        bar = progressbar.ProgressBar()
 
-        report = vt.get_repoort(res=f_resource)
-        pprint.pprint(report)
+        for i in bar(range(100)):
+            sleep(0.1)
+            bar.update(i)
+        try:
+            report = vt.get_repoort(res=f_resource)
+            pprint.pprint(report)
+            if report['response_code'] == -2:
+                raise Exception
+        except Exception:
+            print "Requested resource is not among the finished"
+            print "Trying to request the report again"
+            bar = progressbar.ProgressBar()
+            for i in bar(range(100)):
+                sleep(0.15)
+                bar.update(i)
+            report = vt.get_repoort(res=f_resource)
+            pprint.pprint(report)
 
         return fp.closed
-
-
 
 
 def main(url):

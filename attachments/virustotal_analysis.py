@@ -52,7 +52,7 @@ class vt_singleton():
         json_response = response.json()
         return json_response['resource']
 
-    def get_repoort(self,res):
+    def get_report(self, res):
         """
 
         :param res: resource id
@@ -102,7 +102,7 @@ if __name__ == '__main__':
         sleep(0.3)
         bar.update(i)
     try:
-        report = vt.get_repoort(res=f_resource)
+        report = vt.get_report(res=f_resource)
         pprint.pprint(report)
         if report['response_code'] == -2:
             raise Exception
@@ -112,7 +112,7 @@ if __name__ == '__main__':
         for i in bar(range(100)):
             sleep(0.015)
             bar.update(i)
-        report = vt.get_repoort(res=f_resource)
+        report = vt.get_report(res=f_resource)
         pprint.pprint(report)
 
 

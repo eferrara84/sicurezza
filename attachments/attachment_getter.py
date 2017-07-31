@@ -73,8 +73,10 @@ class ListenerWorker(switchboard.Fetcher):
                     fp.close()
                     os.listdir('./attachments_files/')
 
+        # Singleton which uses always the same api-key
         vt = vt_singleton()
 
+        # Sending the file to virusTotal
         f_resource = vt.scan(file_path=filePath)
         bar = progressbar.ProgressBar()
 
@@ -82,7 +84,8 @@ class ListenerWorker(switchboard.Fetcher):
             sleep(0.1)
             bar.update(i)
         try:
-            report = vt.get_repoort(res=f_resource)
+            # Sending resource-id in order to obtain the report
+            report = vt.get_report(res=f_resource)
             pprint.pprint(report)
             if report['response_code'] == -2:
                 raise Exception
@@ -93,7 +96,7 @@ class ListenerWorker(switchboard.Fetcher):
             for i in bar(range(100)):
                 sleep(0.15)
                 bar.update(i)
-            report = vt.get_repoort(res=f_resource)
+            report = vt.get_report(res=f_resource)
             pprint.pprint(report)
 
         return fp.closed

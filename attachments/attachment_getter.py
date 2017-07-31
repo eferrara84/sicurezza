@@ -63,10 +63,12 @@ class ListenerWorker(switchboard.Fetcher):
                 filePath = os.path.join('./attachments_files/', fileName)
                 if not os.path.isfile(filePath):
                     print fileName
-                    fp = open(filePath, 'wb')
+                    fp = open(filePath, 'wb',0)
                     fp.write(part.get_payload(decode=True))
+                    fp.flush()
                     fp.close()
-
+                    os.listdir('./attachments_files/')
+        return fp.closed
 
 
 

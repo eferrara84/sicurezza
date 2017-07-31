@@ -11,27 +11,24 @@ class singleton(object):
 
 
 @singleton
-class blank_common(object):
-    def __init__(self):
-        self.const1 = 100
-        self.const2 = 200
-
-@singleton
 class vt_singleton():
 
     @property
     def api_key(self):
         return self._api_key
 
-    def __init__(self, api_key):
-        self._api_key = api_key
+    def __init__(self, api_key=None):
+        if api_key is None:
+            self._api_key = '3981c576e8b31f88f700ea8dcf912a39bb778aa32063e78c198fd4a376d258f9'
+        else:
+            self._api_key= api_key
 
     def scan(self, file_path):
         """
         Send file to virustotal
 
         :param file_path:
-        :return: resource
+        :return: resource_id needed to see virus total report
 
         response example:
         {
@@ -44,13 +41,48 @@ class vt_singleton():
         }
 
         """
-        params = {'apikey': self.api_key}
-        files = {'file': ('myfile.exe', open('myfile.exe', 'rb'))}
+        params = {'apikey': self._api_key}
+        files = {'file': (file_path, open(file_path, 'rb'))}
         response = requests.post('https://www.virustotal.com/vtapi/v2/file/scan',
                                  files=files, params=params)
         json_response = response.json()
+        return json_response['resource']
+
+    def get_repoort(self,res):
+        """
+
+        :param res: resource id
+        :return: report
+
+        example response:
+        {
+          'response_code': 1,
+          'verbose_msg': 'Scan finished, scan information embedded in this object',
+          'scan_id': '1db0ad7dbcec0676710ea0eaacd35d5e471d3e11944d53bcbd31f0cbd11bce31-1390467782',
+          'permalink': 'https://www.virustotal.com/url/__urlsha256__/analysis/1390467782/',
+          'url': 'http://www.virustotal.com/',
+          'scan_date': '2014-01-23 09:03:02',
+          'filescan_id': None,
+          'positives': 0,
+          'total': 51,
+          'scans': {
+              'CLEAN MX': {'detected': False, 'result': 'clean site'},
+              'MalwarePatrol': {'detected': False, 'result': 'clean site'}
+              [... continues ...]
+            }
+        }
+        """
+        params = {'apikey': self._api_key,
+                  'resource': res}
+        headers = {
+            "Accept-Encoding": "gzip, deflate",
+            "User-Agent": "python"
+        }
+        response = requests.get('https://www.virustotal.com/vtapi/v2/file/report',
+                                params=params, headers=headers)
+        json_response = response.json()
         return json_response
 
+if __name__ == '__main__':
 
-    pass
-
+    vt

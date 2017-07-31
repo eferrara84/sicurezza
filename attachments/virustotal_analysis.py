@@ -1,5 +1,8 @@
+from time import sleep, time
+
 import requests
 import pprint
+import progressbar
 
 class singleton(object):
     def __init__(self, cls):
@@ -91,9 +94,25 @@ if __name__ == '__main__':
     file = './attachments_files/Schermata 2017-07-31 alle 12.46.29.jpg'
 
     f_resource = vt.scan(file_path=file)
-    print f_resource
-    print 'ee551491bf660b85eca8925bc52457a3e1915ba127d2392222fccd93eb67a87a'
+    # print f_resource
+    # print 'ee551491bf660b85eca8925bc52457a3e1915ba127d2392222fccd93eb67a87a'
+    bar = progressbar.ProgressBar()
 
-    report = vt.get_repoort(res=f_resource)
-    pprint.pprint(report)
+    for i in bar(range(100)):
+        sleep(0.3)
+        bar.update(i)
+    try:
+        report = vt.get_repoort(res=f_resource)
+        pprint.pprint(report)
+        if report['response_code'] == -2:
+            raise Exception
+    except Exception:
+        print "Requested resource is not among the finished"
+        print "Trying to request the report again"
+        for i in bar(range(100)):
+            sleep(0.015)
+            bar.update(i)
+        report = vt.get_repoort(res=f_resource)
+        pprint.pprint(report)
+
 

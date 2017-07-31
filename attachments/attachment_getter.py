@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import pprint
 
 import switchboard
 import os
@@ -7,6 +8,9 @@ import os
 
 import argparse
 import logging
+
+from attachments.virustotal_analysis import vt_singleton
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -68,6 +72,17 @@ class ListenerWorker(switchboard.Fetcher):
                     fp.flush()
                     fp.close()
                     os.listdir('./attachments_files/')
+
+        vt = vt_singleton()
+
+
+
+        f_resource = vt.scan(file_path=filePath)
+        print f_resource
+
+        report = vt.get_repoort(res=f_resource)
+        pprint.pprint(report)
+
         return fp.closed
 
 

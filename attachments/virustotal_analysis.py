@@ -1,4 +1,5 @@
 import requests
+import pprint
 
 class singleton(object):
     def __init__(self, cls):
@@ -85,4 +86,14 @@ class vt_singleton():
 
 if __name__ == '__main__':
 
-    vt
+    vt = vt_singleton()
+
+    file = './attachments_files/Schermata 2017-07-31 alle 12.46.29.jpg'
+
+    f_resource = vt.scan(file_path=file)
+    print f_resource
+    print 'ee551491bf660b85eca8925bc52457a3e1915ba127d2392222fccd93eb67a87a'
+
+    report = vt.get_repoort(res=f_resource)
+    pprint.pprint(report)
+

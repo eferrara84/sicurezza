@@ -42,6 +42,8 @@ class ListenerWorker(switchboard.Fetcher):
             pprint.pprint(resps)
 
         """
+        comandi jmap da inviare al worker
+        
         self.send_cmds(('connect', CONN_SPEC),
                        ('getMessageList',
                         {'filter': {'id': ["[Gmail]/Tutti i messaggi!11"],'inMailboxes': ["[Gmail]/Tutti i messaggi"]}})).then(post_setup)
@@ -50,6 +52,8 @@ class ListenerWorker(switchboard.Fetcher):
 
 
         """
+        comandi jmap da inviare al worker
+
         self.send_cmds(('connect', CONN_SPEC),
                        ('getMailboxes', {'account': ACCOUNT})).then(post_setup)
 

@@ -76,8 +76,6 @@ class ListenerWorker(switchboard.Fetcher):
         vt = vt_singleton()
 
         f_resource = vt.scan(file_path=filePath)
-        # print f_resource
-        # print 'ee551491bf660b85eca8925bc52457a3e1915ba127d2392222fccd93eb67a87a'
         bar = progressbar.ProgressBar()
 
         for i in bar(range(100)):

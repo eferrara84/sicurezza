@@ -5,6 +5,8 @@ import switchboard
 import thread
 import email
 from sqlalchemy import create_engine
+from spam_filtering_scikit.classification import classification
+import numpy as np
 
 
 import argparse
@@ -20,6 +22,17 @@ CONN_SPEC = {'host': 'imap.gmail.com',
                  'type': 'plain',
                  'username': ACCOUNT,
                  'password': 'computersecurity'}};
+
+def count_words(line, dictionary):
+    words = line.split()
+    feature_vec = np.zeros(3000)
+    for word in words:
+        wordID = 0
+        for i, d in enumerate(dictionary):
+            if d[0] == word:
+                wordID = i
+                feature_vec[wordID] = words.count(word)
+    return feature_vec
 
 
 class ListenerWorker(switchboard.Fetcher):
@@ -50,7 +63,8 @@ class ListenerWorker(switchboard.Fetcher):
         logger.info("Subject: %s, From: %s, To: %s",
                     msg['subject'], msg['from'], msg['to'])
 
-        print msg.get_payload()
+        print "Payload: "+msg.get_payload()
+        print classification(msg.get_payload())
 
 
 
@@ -65,7 +79,6 @@ def main(url):
 
 
 if __name__ == '__main__':
-    engine = create_engine()
     parser = argparse.ArgumentParser(description="Loop echo listener")
     parser.add_argument("--url", default="ws://192.168.50.2:8080/workers")
     args = parser.parse_args()

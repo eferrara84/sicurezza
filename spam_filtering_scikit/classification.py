@@ -1,12 +1,5 @@
-import os
-import numpy as np
-from collections import Counter
-from sklearn.naive_bayes import MultinomialNB, GaussianNB, BernoulliNB
-from sklearn.svm import SVC, NuSVC, LinearSVC
-from sklearn.metrics import confusion_matrix
 import pickle
-
-
+from spam_filtering_scikit.train import count_words
 
 def classification(mail_body):
     """
@@ -16,17 +9,13 @@ def classification(mail_body):
     """
 
     # load it again into gnb_loaded
-    with open('./percistence/my_dumped_classifier.pkl', 'rb') as fid:
+    with open('/Users/maurapintor/PycharmProjects/sicurezza/spam_filtering_scikit/my_dumped_classifier.pkl', 'rb') as fid:
         clf_loaded = pickle.load(fid)
 
-    with open('./percistence/my_dumped_dictionary.pkl', 'rb') as fid:
+    with open('/Users/maurapintor/PycharmProjects/sicurezza/spam_filtering_scikit/my_dumped_dictionary.pkl', 'rb') as fid:
         dict_loaded = pickle.load(fid)
 
+    feature_vec = count_words(mail_body, dict_loaded)
 
-    print clf_loaded.predict(mail_body)
+    return clf_loaded.predict(feature_vec)
 
-
-if __name__ == '__main__':
-
-
-    classification("ciao")

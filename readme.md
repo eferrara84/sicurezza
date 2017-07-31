@@ -398,6 +398,11 @@ implentati i metodi per usufruire di due servizi:
                   eseguita, viene fornito un'elenco dettagliato dei
                   risultati ottenuti con diversi antivirus.
 
+Al momento viene utilizzata la API-KEY associata all'account:
+* email: tesinasicurezza@gmail.com
+* password: sicurezza
+* API-KEY: 3981c576e8b31f88f700ea8dcf912a39bb778aa32063e78c198fd4a376d258f9
+
 ```python
 class singleton(object):
     def __init__(self, cls):

@@ -1,6 +1,5 @@
 Title:	Gestione Mail con Switchboard  
 Author: Enrico Ferrara, Maura Pintor, Marco Uras
-rot13	
 Date:	July 31, 2017  
 
 # Switchboard

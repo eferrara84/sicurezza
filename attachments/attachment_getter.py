@@ -16,13 +16,13 @@ from attachments.virustotal_analysis import vt_singleton
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-ACCOUNT = 'tesinasicurezza@gmail.com'
+ACCOUNT = 'grfvanfvphermmn@gmail.com'
 CONN_SPEC = {'host': 'imap.gmail.com',
              'port': 993,
              'auth': {
                  'type': 'plain',
                  'username': ACCOUNT,
-                 'password': 'computersecurity'}};
+                 'password': 'pbzchgrefrphevgl'}};
 
 
 class ListenerWorker(switchboard.Fetcher):

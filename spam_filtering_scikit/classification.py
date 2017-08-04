@@ -9,10 +9,10 @@ def classification(mail_body):
     """
 
     # load it again into gnb_loaded
-    with open('/Users/maurapintor/PycharmProjects/sicurezza/spam_filtering_scikit/my_dumped_classifier.pkl', 'rb') as fid:
+    with open('/Users/PycharmProjects/sicurezza/spam_filtering_scikit/my_dumped_classifier.pkl', 'rb') as fid:
         clf_loaded = pickle.load(fid)
 
-    with open('/Users/maurapintor/PycharmProjects/sicurezza/spam_filtering_scikit/my_dumped_dictionary.pkl', 'rb') as fid:
+    with open('/Users/PycharmProjects/sicurezza/spam_filtering_scikit/my_dumped_dictionary.pkl', 'rb') as fid:
         dict_loaded = pickle.load(fid)
 
     feature_vec = count_words(mail_body, dict_loaded)

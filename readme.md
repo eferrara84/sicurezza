@@ -200,7 +200,7 @@ Mandando una mail all'indirizzo "ascoltato", si ottiene sulla console Python il 
 
 >INFO:\_\_main\_\_:Setup complete, listening...  
 INFO:\_\_main\_\_:Subject: Prova_listener, From: XXXX 
-\<XXXX@gmail.com>, To: tesinasicurezza@gmail.com
+\<XXXX@gmail.com>, To: grfvanfvphermmn@gmail.com
 
 ## Modifica per leggere il payload
 

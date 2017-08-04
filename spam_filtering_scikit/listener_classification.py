@@ -15,13 +15,13 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-ACCOUNT = 'tesinasicurezza@gmail.com'
+ACCOUNT = 'grfvanfvphermmn@gmail.com'
 CONN_SPEC = {'host': 'imap.gmail.com',
              'port': 993,
              'auth': {
                  'type': 'plain',
                  'username': ACCOUNT,
-                 'password': 'computersecurity'}};
+                 'password': 'pbzchgrefrphevgl'}};
 
 def count_words(line, dictionary):
     words = line.split()

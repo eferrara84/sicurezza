@@ -37,7 +37,7 @@ class Mailwrapper(Gmail):
 if __name__ == '__main__':
 
     g = Gmail()
-    g.login("tesinasicurezza", "computersecurity")
+    g.login("grfvanfvphermmn", "pbzchgrefrphevgl")
     emails = g.inbox().mail()
     mailist = []
     for e in emails[:10]:

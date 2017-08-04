@@ -166,13 +166,13 @@ Aprendo il file listener.py si possono inserire i dati della casella di posta da
 In particolare è da modificare il dizionario CONN_SPEC inserendo i dati:
 
 ```python
-ACCOUNT = 'tesinasicurezza@gmail.com'  
+ACCOUNT = 'grfvanfvphermmn@gmail.com'  
 CONN_SPEC = {'host': 'imap.gmail.com',  
              'port': 993,  
              'auth': {  
                  'type': 'plain',  
-                 'u': ACCOUNT,  
-                 'p': 'pbzchgrefrphevgl'}};  
+                 'username': ACCOUNT,  
+                 'password': 'pbzchgrefrphevgl'}};  
 
 ```
 
@@ -399,7 +399,7 @@ implentati i metodi per usufruire di due servizi:
 
 Al momento viene utilizzata la API-KEY associata all'account:
 
-* e: tesinasicurezza@gmail.com
+* e: grfvanfvphermmn@gmail.com
 * p: fvphermmn
 * API-KEY: 3981c576e8b31f88f700ea8dcf912a39bb778aa32063e78c198fd4a376d258f9
 

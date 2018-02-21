@@ -14,13 +14,13 @@ import pprint
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-ACCOUNT = 'tesinasicurezza@gmail.com'
+ACCOUNT = '@gmail.com'
 CONN_SPEC = {'host': 'imap.gmail.com',
              'port': 993,
              'auth': {
                  'type': 'plain',
                  'username': ACCOUNT,
-                 'password': 'computersecurity'}};
+                 'password': ''}};
 
 
 class ListenerWorker(switchboard.Fetcher):
